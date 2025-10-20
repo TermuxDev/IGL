@@ -1,17 +1,19 @@
 {
   "chefs_groupe": {
-    "G123456": "Sophie",
-    "H789012": "Marc",
-    "I345678": "Fatima",
-    "J901234": "Kylian ",
-    "K567890": "Yasmine Kadi"
+    "NDAK2808060001": "N'DA KOUASSI CYNANTY JEAN E.",
+    "DIAV2211030001": "DIABATE VAKOUSSE HABIB",
+    "DJAK3012060001": "DJAHA KONAN EYMERIC MONDESIR",
+    "KOFK2803070001": "KOFFI KONAN ANGE EMMANUEL",
+    "DIOK1708060001": "DIOMANDE KEUWE MICKAEL",
+    "LASY0910060001": "LASME YEBLE SAMUELLA",
+    "NDRK2305060001": "N'DRI KOUADIO MIXAËL SILVANUS"
   },
   "themes_disponibles": {
-    "T1": "L'impact de l'IA sur l'autonomie des seniors",
-    "T2": "L'éthique des données massives dans la santé",
-    "T3": "Cybersécurité des dispositifs IoT médicaux",
-    "T4": "Blockchain et traçabilité des médicaments",
-    "T5": "Analyse prédictive des épidémies"
+    "T1": "Résolution numérique d’un système linéaire issu d’un circuit électrique.",
+    "T2": "Méthodes numériques pour la résolution d’équations différentielles appliquées à la température d’un processeur.",
+    "T3": "Simulation numérique d’un système de population (modèle de Verhulst ou de Lotka-Volterra)",
+    "T4": "Méthodes numériques pour la résolution d’équations non linéaires.",
+    "T5": "Approximation de fonctions et interpolation polynomiale."
   },
   "resultats_tirage": {},
   "themes_attribues_count": {} 

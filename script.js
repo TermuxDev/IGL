@@ -155,15 +155,95 @@ function setupDashboardListener() {
         statusItem.style.marginTop = '15px';
         statusItem.style.fontWeight = 'bold';
         
+        const printBtn = document.getElementById('print-btn');
         if (assignedThemesCount < totalThemes) {
             statusItem.innerHTML = `Thèmes non attribués : <span>${totalThemes - assignedThemesCount} sur ${totalThemes}</span>`;
-            statusItem.style.color = '#ffc107'; 
+            statusItem.style.color = '#ffc107';
+            if (printBtn) printBtn.style.display = 'none';
         } else {
             statusItem.innerHTML = `STATUT : Tous les thèmes ont été attribués au moins une fois !`;
-            statusItem.style.color = '#28a745'; 
+            statusItem.style.color = '#28a745';
+            if (printBtn) printBtn.style.display = 'inline-block';
         }
         resultsList.appendChild(statusItem);
     });
+}
+
+function printTable() {
+    const resultsList = document.getElementById('results-list');
+    if (!resultsList) return;
+    
+    let printContent = `
+        <html>
+        <head>
+            <title>Tableau des Résultats - Tirage au Sort des Thèmes</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                h1 { color: #007bff; text-align: center; margin-bottom: 30px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+                th { background-color: #f8f9fa; font-weight: bold; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+                .status-row { font-weight: bold; background-color: #e9ecef !important; }
+                @media print { 
+                    body { margin: 0; }
+                    h1 { page-break-after: avoid; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Résultats du Tirage au Sort des Thèmes</h1>
+            <p><strong>Date :</strong> ${new Date().toLocaleDateString('fr-FR')}</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chef de Groupe</th>
+                        <th>Identifiant</th>
+                        <th>Thème Attribué</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    const listItems = resultsList.querySelectorAll('li');
+    listItems.forEach(item => {
+        const text = item.textContent || item.innerText;
+        if (text.includes('STATUT') || text.includes('Thèmes non attribués')) {
+            printContent += `<tr class="status-row"><td colspan="3">${text}</td></tr>`;
+        } else if (!text.includes('Connexion')) {
+            const parts = text.split(' : ');
+            if (parts.length === 2) {
+                const nameAndId = parts[0];
+                const theme = parts[1];
+                const idMatch = nameAndId.match(/\(([^)]+)\)/);
+                const name = nameAndId.replace(/\s*\([^)]+\)/, '');
+                const id = idMatch ? idMatch[1] : '';
+                printContent += `
+                    <tr>
+                        <td>${name}</td>
+                        <td>${id}</td>
+                        <td>${theme}</td>
+                    </tr>
+                `;
+            }
+        }
+    });
+    
+    printContent += `
+                </tbody>
+            </table>
+        </body>
+        </html>
+    `;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 250);
 }
 
 window.onload = function() {

@@ -4,102 +4,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plateforme de Tirage au Sort des Thèmes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* CSS intégré pour la simplicité, à externaliser dans styles.css si désiré */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            max-width: 900px; 
-            margin: 40px auto; 
-            padding: 20px; 
-            background-color: #f4f7f6;
+        /* Reset et base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        h1 { color: #007bff; text-align: center; margin-bottom: 30px; }
-        #auth-section, #draw-section, #dashboard { 
-            margin-bottom: 30px; 
-            padding: 20px; 
-            border-radius: 8px; 
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /*background: linear-gradient(135deg, #919ac0 0%, #764ba2 100%);*/
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
         }
-        h2 { 
-            color: #333; 
-            border-bottom: 2px solid #eee; 
-            padding-bottom: 10px; 
-            margin-top: 0;
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        input[type="text"] { 
-            padding: 12px; 
-            width: 70%; 
-            margin-right: 15px; 
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        button { 
-            padding: 12px 25px; 
-            cursor: pointer; 
-            background-color: #28a745; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            transition: background-color 0.3s;
+
+        /* Header */
+        h1 {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 0;
         }
-        button:hover { background-color: #1e7e34; }
-        .result-box { 
-            padding: 20px; 
-            margin-top: 15px; 
-            border-radius: 4px; 
-            text-align: center; 
+
+        /* Sections */
+        .section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
         }
-        .success { 
-            background-color: #d4edda; 
-            color: #155724; 
+        .section:last-child {
+            border-bottom: none;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        h2 i {
+            margin-right: 10px;
+        }
+
+        /* Form elements */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            outline: none;
+        }
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Messages */
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
             border: 1px solid #c3e6cb;
         }
-        #results-list { list-style: none; padding: 0; }
-        #results-list li { 
-            padding: 12px 0; 
-            border-bottom: 1px dotted #e9ecef; 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 1.05em;
+
+        /* Draw section */
+        #draw-section {
+            text-align: center;
         }
-        #results-list li:last-child { border-bottom: none; }
+        #drawButton {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .result-box {
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #007bff;
+            animation: bounceIn 0.6s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #finalTheme {
+            font-size: 1.8em;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Dashboard */
+        #results-list {
+            list-style: none;
+            padding: 0;
+        }
+        #results-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+        #results-list li:hover {
+            background: #f8f9fa;
+        }
+        #results-list li:last-child {
+            border-bottom: none;
+        }
+        .status {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+                padding: 20px;
+            }
+            .section {
+                padding: 20px;
+            }
+            .form-group {
+                flex-direction: column;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+            #results-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1><i class="fas fa-dice"></i> Tirage au Sort des Thèmes de Recherche</h1>
 
-    <h1>Tirage au Sort des Thèmes de Recherche</h1>
-
-    <div id="auth-section">
-        <h2>1. Identification du Chef de Groupe</h2>
-        <input type="text" id="permanentId" placeholder="Entrez votre identifiant permanent (ex: A12345678)">
-        <button onclick="authenticate()">Valider et Accéder</button>
-        <div id="auth-message" style="margin-top: 10px; color: red;"></div>
-    </div>
-
-    <div id="draw-section" style="display:none;">
-        <h2>2. Lancer le Tirage au Sort</h2>
-        <p>Bienvenue, <strong id="userName"></strong>. Cliquez sur le bouton pour attribuer votre thème de recherche.</p>
-        
-        <button id="drawButton" onclick="startDraw()">Lancer le Tirage ! 🎉</button>
-        
-        <div id="draw-result" class="result-box" style="display:none;">
-            <h3>Thème Attribué :</h3>
-            <p id="finalTheme" style="font-size: 1.4em; font-weight: bold;"></p>
+        <div id="auth-section" class="section">
+            <h2><i class="fas fa-user-check"></i> 1. Identification du Chef de Groupe</h2>
+            <div class="form-group">
+                <input type="text" id="permanentId" placeholder="Entrez votre identifiant permanent (ex: A12345678)">
+                <button onclick="authenticate()"><i class="fas fa-check"></i> Valider et Accéder</button>
+            </div>
+            <div id="auth-message"></div>
         </div>
-    </div>
 
-    <div id="dashboard">
-        <h2>3. Tableau de Bord (Résultats en Direct)</h2>
-        <ul id="results-list">
-            <li>Connexion à la base de données...</li>
-        </ul>
-        <p style="font-size: 0.8em; margin-top: 15px; color: #6c757d;">Ce tableau se met à jour en temps réel pour tous les participants.</p>
+        <div id="draw-section" class="section" style="display:none;">
+            <h2><i class="fas fa-random"></i> 2. Lancer le Tirage au Sort</h2>
+            <p>Bienvenue, <strong id="userName"></strong>. Cliquez sur le bouton pour attribuer votre thème de recherche.</p>
+            <button id="drawButton" onclick="startDraw()"><i class="fas fa-play"></i> Lancer le Tirage ! 🎉</button>
+            <div id="draw-result" class="result-box" style="display:none;">
+                <h3><i class="fas fa-trophy"></i> Thème Attribué :</h3>
+                <p id="finalTheme"></p>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2><i class="fas fa-chart-line"></i> 3. Tableau de Bord (Résultats en Direct)</h2>
+            <ul id="results-list">
+                <li><span>Connexion à la base de données...</span> <span class="status"><i class="fas fa-spinner loading"></i></span></li>
+            </ul>
+            <button id="print-btn" onclick="printTable()" style="display:none;margin-top:18px;padding:12px 28px;font-size:1em;border-radius:8px;background:linear-gradient(135deg,#007bff,#0056b3);color:#fff;border:none;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(0,123,255,0.3);">
+                <i class="fas fa-print"></i> Imprimer le tableau
+            </button>
+            <p class="status" style="margin-top: 15px;">Ce tableau se met à jour en temps réel pour tous les participants.</p>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script src="script.js"></script>
 </body>
 </html>
