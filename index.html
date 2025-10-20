@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme de Tirage au Sort des Thèmes</title>
+    <style>
+        /* CSS intégré pour la simplicité, à externaliser dans styles.css si désiré */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 20px; 
+            background-color: #f4f7f6;
+        }
+        h1 { color: #007bff; text-align: center; margin-bottom: 30px; }
+        #auth-section, #draw-section, #dashboard { 
+            margin-bottom: 30px; 
+            padding: 20px; 
+            border-radius: 8px; 
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        h2 { 
+            color: #333; 
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 10px; 
+            margin-top: 0;
+        }
+        input[type="text"] { 
+            padding: 12px; 
+            width: 70%; 
+            margin-right: 15px; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button { 
+            padding: 12px 25px; 
+            cursor: pointer; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            transition: background-color 0.3s;
+        }
+        button:hover { background-color: #1e7e34; }
+        .result-box { 
+            padding: 20px; 
+            margin-top: 15px; 
+            border-radius: 4px; 
+            text-align: center; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb;
+        }
+        #results-list { list-style: none; padding: 0; }
+        #results-list li { 
+            padding: 12px 0; 
+            border-bottom: 1px dotted #e9ecef; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 1.05em;
+        }
+        #results-list li:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Tirage au Sort des Thèmes de Recherche</h1>
+
+    <div id="auth-section">
+        <h2>1. Identification du Chef de Groupe</h2>
+        <input type="text" id="permanentId" placeholder="Entrez votre identifiant permanent (ex: A12345678)">
+        <button onclick="authenticate()">Valider et Accéder</button>
+        <div id="auth-message" style="margin-top: 10px; color: red;"></div>
+    </div>
+
+    <div id="draw-section" style="display:none;">
+        <h2>2. Lancer le Tirage au Sort</h2>
+        <p>Bienvenue, <strong id="userName"></strong>. Cliquez sur le bouton pour attribuer votre thème de recherche.</p>
+        
+        <button id="drawButton" onclick="startDraw()">Lancer le Tirage ! 🎉</button>
+        
+        <div id="draw-result" class="result-box" style="display:none;">
+            <h3>Thème Attribué :</h3>
+            <p id="finalTheme" style="font-size: 1.4em; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <div id="dashboard">
+        <h2>3. Tableau de Bord (Résultats en Direct)</h2>
+        <ul id="results-list">
+            <li>Connexion à la base de données...</li>
+        </ul>
+        <p style="font-size: 0.8em; margin-top: 15px; color: #6c757d;">Ce tableau se met à jour en temps réel pour tous les participants.</p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "chefs_groupe": {
+    "G123456": "Sophie",
+    "H789012": "Marc",
+    "I345678": "Fatima",
+    "J901234": "Kylian ",
+    "K567890": "Yasmine Kadi"
+  },
+  "themes_disponibles": {
+    "T1": "L'impact de l'IA sur l'autonomie des seniors",
+    "T2": "L'éthique des données massives dans la santé",
+    "T3": "Cybersécurité des dispositifs IoT médicaux",
+    "T4": "Blockchain et traçabilité des médicaments",
+    "T5": "Analyse prédictive des épidémies"
+  },
+  "resultats_tirage": {},
+  "themes_attribues_count": {} 
+}
